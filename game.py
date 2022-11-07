@@ -35,14 +35,16 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
 # Player Variables
-player_x = 50
-player_y = 50
+player_x = 70
+player_y = 130
 
 # Target Variables
 target_x = 250
-target_y = 0
+target_y = 300
 
 # TODO: Add variables for the "enemy" character
+enemy_x = 170
+enemy_y = 50
 
 # Other variables
 velocity = 3
@@ -102,8 +104,11 @@ while running:
 
     # Update the target
     target_y += velocity
-
+  
+    
     # TODO: Update the enemy's y position based on its velocity
+    enemy_y += velocity
+
 
     # If target went off the screen, reset it
     if target_y > SCREEN_HEIGHT: 
@@ -111,6 +116,10 @@ while running:
         target_x = random.random() * (SCREEN_WIDTH - CHARACTER_WIDTH)
 
     # TODO: If enemy went off the screen, reset it
+    if enemy_y > SCREEN_HEIGHT: 
+        enemy_y = 0
+        enemy_x = random.random() * (SCREEN_WIDTH - CHARACTER_WIDTH)
+
 
     # If player collides with target, reset it & increment points
     if is_colliding(player_x, player_y, target_x, target_y, CHARACTER_WIDTH, CHARACTER_HEIGHT):
@@ -130,7 +139,8 @@ while running:
     pygame.draw.rect(screen, GREEN, (target_x, target_y, CHARACTER_WIDTH, CHARACTER_HEIGHT))
 
     # TODO: Draw the enemy as a red square
-
+    pygame.draw.rect(screen, RED, (enemy_x, enemy_y, CHARACTER_WIDTH, CHARACTER_HEIGHT))
+ 
     # Draw the points
     draw_text(text=f'Points: {points}', color=BLACK, font_size=24, x=20, y=20)
 
